@@ -9,6 +9,7 @@ oauthlib = "*"
 requests-oauthlib = "*"
 pygsheets = "*"
 pandas = "*"
+fitbit = "*"
 
 [dev-packages]
 
