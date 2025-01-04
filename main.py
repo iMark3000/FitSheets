@@ -12,6 +12,7 @@ import pandas as pd
 import pygsheets
 
 from data_config import DATA_CONFIGURATIONS
+from logger_config import get_logger
 
 OAUTH_CLIENT_ID = os.getenv("OAUTH_CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
@@ -21,6 +22,9 @@ REFRESH_URI = os.getenv("REFRESH_URI")
 GSHEET_CREDENTIALS = os.getenv("GSHEET_CREDENTIALS")
 GSHEET_ID = os.getenv("SHEET_ID")
 TOKEN_FILE = os.getenv("TOKEN_FILE")
+
+
+logger = get_logger()
 
 
 def _get_tokens() -> dict:
@@ -50,7 +54,7 @@ def get_nutrition_data_from_date_range(fb: fitbit.Fitbit, days: int = 5) -> pd.D
         base_url = "{0}/{1}/user/{2}/foods/log/date".format(*common_args)
         url = f"{base_url}/{str_date}.json"
         food = fb.make_request(url)
-        print(f"Getting nutrition data from {str_date}")
+        logger.info(f"Getting nutrition data from {str_date}")
         sleep(3)
         _ = food.pop("foods", None)
         food["date"] = str_date
@@ -154,10 +158,10 @@ def main():
     df = df.fillna("-")
     spreadsheet = connect_to_gsheet()
 
-    print("Updating Sheet")
+    logger.info("Updating Sheet")
     update_sheet(df, spreadsheet, "NUTRITION")
 
-    print("Refreshing tokens")
+    logger.info("Refreshing tokens")
     fb.client.refresh_token()
 
 
