@@ -122,7 +122,6 @@ def _update_timestamp(worksheet: pygsheets.Worksheet, timestamp_cell: str) -> No
 
 
 def _update_fitbit_tokens(tokens) -> None:
-    print(tokens)
     new_access_token = tokens["access_token"]
     new_refresh_token = tokens["refresh_token"]
     updated_tokens = {
