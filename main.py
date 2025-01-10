@@ -63,15 +63,32 @@ def main():
         refresh_cb=_update_fitbit_tokens
     )
 
-    df = get_nutrition_data_from_date_range(fb)
-    df = df.fillna("-")
+    args = parse_runtime_args()
+
+    print(args)
+
+    days = args.days
+
     spreadsheet = connect_to_gsheet()
 
-    logger.info("Updating Sheet")
-    update_sheet(df, spreadsheet, "NUTRITION")
+    if args.activity:
+        df = fitbit_data.fetch_activity(fb, days=5)
 
-    logger.info("Refreshing tokens")
-    fb.client.refresh_token()
+    if args.nutrition:
+        df = fitbit_data.fetch_nutrition(fb, days)
+        df = df.fillna("-")
+        update_google_sheet(df, spreadsheet, "NUTRITION")
+
+    if args.sleep:
+        df = fitbit_data.fetch_sleep_logs(fb, days=10)
+
+    if args.weight:
+        df = fitbit_data.fetch_weight_logs(fb, days=55)
+        update_google_sheet(df, spreadsheet, "WEIGHT")
+
+    if args.refresh_token:
+        logger.info("Refreshing tokens")
+        fb.client.refresh_token()
 
 
 if __name__ == "__main__":
