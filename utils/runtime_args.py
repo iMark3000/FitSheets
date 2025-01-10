@@ -33,5 +33,12 @@ def parse_runtime_args() -> argparse.Namespace:
         dest="refresh_token",
         action="store_true"
     )
+    parser.add_argument(
+        "-d", "--days",
+        help="Number of days to fetch; default 5",
+        dest="days",
+        default=5,
+        type=int
+    )
 
     return parser.parse_args()
