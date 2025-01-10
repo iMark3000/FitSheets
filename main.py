@@ -1,18 +1,15 @@
-import datetime
 import json
 import os
-from logging import Logger
-from textwrap import indent
 from time import sleep
-from typing import List
-from zoneinfo import ZoneInfo
 
 import fitbit
 import pandas as pd
 import pygsheets
 
-from data_config import DATA_CONFIGURATIONS
-from logger_config import get_logger
+from utils.logger_config import get_logger
+from utils.runtime_args import parse_runtime_args
+from workflows import fitbit_data
+from workflows.update_sheets import update_google_sheet
 
 OAUTH_CLIENT_ID = os.getenv("OAUTH_CLIENT_ID")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET")
