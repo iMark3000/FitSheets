@@ -1,10 +1,14 @@
 import datetime
+import logging
 from zoneinfo import ZoneInfo
 
 import pandas as pd
 import pygsheets
 
 from utils.data_config import DATA_CONFIGURATIONS
+
+
+logger = logging.getLogger(__name__)
 
 
 def _get_new_records(sheet_df: pd.DataFrame, api_df: pd.DataFrame, id_col: str) -> pd.DataFrame:
@@ -37,6 +41,7 @@ def _update_timestamp(worksheet: pygsheets.Worksheet, timestamp_cell: str) -> No
 
 def update_google_sheet(data: pd.DataFrame, spreadsheet: pygsheets.Spreadsheet, data_config: str) -> None:
     config = DATA_CONFIGURATIONS[data_config]
+    logger.info(f"Updating {config['sheet_name']} sheet")
     data = data.rename(config["field_mappings"], axis=1)
     data = data[config["field_filter_and_order"]]
     data.to_csv(f"{config['sheet_name']}.csv", index=False)
