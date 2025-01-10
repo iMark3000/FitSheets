@@ -2,8 +2,8 @@
 DATA_CONFIGURATIONS
 --- Key of DATA_CONFIGURATIONS is the metric being pulled from FitBit
 --- sheet_name is the name of the worksheet in the Google Spreadsheet
---- id_field is the unique identifier of record in teh worksheet;
-        FitBit fields need to be renamed to match id_field
+--- id_field is the unique identifier of record in the worksheet;
+        The id_field needs to be a value of the field_mappings dict (see below);
 --- field_mappings maps the FitBit field to the column headers of the worksheet
 --- field_filter_and_order filters the fields and is the order that the fields
         are in on the worksheet; Must be renamed first
@@ -78,18 +78,34 @@ DATA_CONFIGURATIONS = {
         "timestamp_cell": "A1"
     },
     "WEIGHT": {
-        "sheet_name": "",
-        "id_field": "",
+        "sheet_name": "Weight Logs",
+        "id_field": "Log ID",
         "field_mappings": {
+            "bmi": "BMI",
+            "date": "Date",
+            "fat": "Fat",
+            "logId": "Log ID",
+            "source": "source",
+            "time": "Time",
+            "weight": "Weight"
         },
-        "field_filter_and_order": []
+        "field_filter_and_order": [
+            "Log ID",
+            "Date",
+            "Time",
+            "Weight",
+            "BMI",
+            "Fat",
+        ],
+        "timestamp_cell": "A1"
     },
     "ACTIVITY": {
         "sheet_name": "",
         "id_field": "",
         "field_mappings": {
         },
-        "field_filter_and_order": []
+        "field_filter_and_order": [],
+        "timestamp_cell": "",
     }
 }
 
