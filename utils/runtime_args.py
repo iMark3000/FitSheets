@@ -1,5 +1,12 @@
 import argparse
 
+def _check_for_no_args(args) -> bool:
+    """Checks if no args provided; If no args, returns True"""
+    for arg, value in args.items():
+        if isinstance(value, bool) and value is True:
+            return False
+    return True
+
 
 def parse_runtime_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Pick which ones")
@@ -40,5 +47,11 @@ def parse_runtime_args() -> argparse.Namespace:
         default=5,
         type=int
     )
+
+    args = parser.parse_args()
+
+    if _check_for_no_args(args):
+        for arg, value in args.items():
+            setattr(args, arg, True)
 
     return parser.parse_args()

@@ -65,8 +65,6 @@ def main():
 
     args = parse_runtime_args()
 
-    print(args)
-
     days = args.days
 
     spreadsheet = connect_to_gsheet()
