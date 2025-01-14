@@ -70,18 +70,18 @@ def main():
     spreadsheet = connect_to_gsheet()
 
     if args.activity:
-        df = fitbit_data.fetch_activity(fb, days=5)
+        df = fitbit_data.fetch_activity(fb, days=days)
 
     if args.nutrition:
-        df = fitbit_data.fetch_nutrition(fb, days)
+        df = fitbit_data.fetch_nutrition(fb, days=days)
         df = df.fillna("-")
         update_google_sheet(df, spreadsheet, "NUTRITION")
 
     if args.sleep:
-        df = fitbit_data.fetch_sleep_logs(fb, days=10)
+        df = fitbit_data.fetch_sleep_logs(fb, days=days)
 
     if args.weight:
-        df = fitbit_data.fetch_weight_logs(fb, days=55)
+        df = fitbit_data.fetch_weight_logs(fb, days=days)
         update_google_sheet(df, spreadsheet, "WEIGHT")
 
     if args.refresh_token:
