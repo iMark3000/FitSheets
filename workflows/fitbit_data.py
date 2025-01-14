@@ -68,10 +68,8 @@ def _parse_sleep_data(sleep_data: dict) -> pd.DataFrame:
 def fetch_weight_logs(fb: fitbit.Fitbit, days: int):
     common_args = _create_common_api_args(fb)
     dates_to_get = _create_date_range(days)
-    # start_date = dates_to_get[0].strftime("%Y-%m-%d")
-    start_date = "2024-03-01"
-    # end_date = dates_to_get[-1].strftime("%Y-%m-%d")
-    end_date = "2024-03-31"
+    start_date = dates_to_get[0].strftime("%Y-%m-%d")
+    end_date = dates_to_get[-1].strftime("%Y-%m-%d")
     base_url = "{0}/{1}/user/{2}/body/log/weight/date".format(*common_args)
     url = f"{base_url}/{start_date}/{end_date}.json"
     logger.info(f"Getting weight logs from {start_date} to {end_date}")
