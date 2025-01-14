@@ -95,7 +95,7 @@ DATA_CONFIGURATIONS = {
             "Time",
             "Weight",
             "BMI",
-            "Fat",
+            # "Fat" ,
         ],
         "timestamp_cell": "A1"
     },
