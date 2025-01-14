@@ -50,8 +50,8 @@ def parse_runtime_args() -> argparse.Namespace:
 
     args = parser.parse_args()
 
-    if _check_for_no_args(args):
-        for arg, value in vars(args):
-            setattr(args, arg, True)
+    # if _check_for_no_args(args):
+    #     for arg, value in vars(args):
+    #         setattr(args, arg, True)
 
     return parser.parse_args()
