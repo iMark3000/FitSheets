@@ -11,7 +11,7 @@ DATA_CONFIGURATIONS
 
 DATA_CONFIGURATIONS = {
     "SLEEP_": {
-        "sheet_name": "",
+        "sheet_name": "Sleep",
         "id_field": "Log ID",
         "field_mappings": {
             "awakeCount": "Awake Count",
@@ -48,7 +48,8 @@ DATA_CONFIGURATIONS = {
             "Awakenings Count",
             "Restless Count",
             "Restless Duration",
-        ]
+        ],
+        "timestamp_cell": "A1"
     },
     "NUTRITION": {
         "sheet_name": "Nutrition",
