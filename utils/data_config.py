@@ -7,10 +7,12 @@ DATA_CONFIGURATIONS
 --- field_mappings maps the FitBit field to the column headers of the worksheet
 --- field_filter_and_order filters the fields and is the order that the fields
         are in on the worksheet; Must be renamed first
+--- data_start_cell is the cell where the data starts in the Google sheet
+--- timestamp_cell is the cell where a timestamp is listed
 """
 
 DATA_CONFIGURATIONS = {
-    "SLEEP_": {
+    "SLEEP": {
         "sheet_name": "Sleep",
         "id_field": "Log ID",
         "field_mappings": {
@@ -18,10 +20,10 @@ DATA_CONFIGURATIONS = {
             "awakeDuration": "Awake Duration",
             "awakeningsCount": "Awakenings Count",
             "dateOfSleep": "Date of Sleep",
-            "duration": "Duration",
+            # "duration": "Duration (Seconds)",  --> This gets dropped
             "efficiency": "Efficiency",
             "endTime": "End Time",
-            "isMainSleep": "Is Main Sleep",
+            # "isMainSleep": "Is Main Sleep", --> This gets dropped
             "logId": "Log ID",
             "minutesAfterWakeup": "Min After Wakeup",
             "minutesAsleep": "Min Asleep",
@@ -33,11 +35,9 @@ DATA_CONFIGURATIONS = {
         },
         "field_filter_and_order": [
             "Log ID",
-            "Is Main Sleep",
             "Date of Sleep",
-            "Start Time"
+            "Start Time",
             "End Time",
-            "Duration",
             "Efficiency",
             "Min To Fall Asleep",
             "Min Asleep",
@@ -49,7 +49,8 @@ DATA_CONFIGURATIONS = {
             "Restless Count",
             "Restless Duration",
         ],
-        "timestamp_cell": "A1"
+        "timestamp_cell": "A1",
+        "data_start_cell": "A2",
     },
     "NUTRITION": {
         "sheet_name": "Nutrition",
@@ -76,7 +77,8 @@ DATA_CONFIGURATIONS = {
             "Sodium",
             "Water"
         ],
-        "timestamp_cell": "A1"
+        "timestamp_cell": "A1",
+        "data_start_cell": "A2",
     },
     "WEIGHT": {
         "sheet_name": "Weight Logs",
@@ -98,7 +100,8 @@ DATA_CONFIGURATIONS = {
             "BMI",
             # "Fat" ,
         ],
-        "timestamp_cell": "A1"
+        "timestamp_cell": "A1",
+        "data_start_cell": "A2",
     },
     "ACTIVITY": {
         "sheet_name": "",
@@ -107,6 +110,7 @@ DATA_CONFIGURATIONS = {
         },
         "field_filter_and_order": [],
         "timestamp_cell": "",
+        "data_start_cell": "",
     }
 }
 

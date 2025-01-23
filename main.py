@@ -79,6 +79,8 @@ def main():
 
     if args.sleep:
         df = fitbit_data.fetch_sleep_logs(fb, days=days)
+        df = df.fillna("-")
+        update_google_sheet(df, spreadsheet, "SLEEP")
 
     if args.weight:
         df = fitbit_data.fetch_weight_logs(fb, days=days)

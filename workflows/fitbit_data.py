@@ -53,7 +53,9 @@ def fetch_sleep_logs(fb: fitbit.Fitbit, days: int) -> pd.DataFrame:
         sleep(3)
         df = _parse_sleep_data(sleep_data)
         sleep_dataframes.append(df)
-    return pd.concat(sleep_dataframes)
+    df = pd.concat(sleep_dataframes)
+    df = df[df["isMainSleep"] == "TRUE"]
+    return df
 
 
 def _parse_sleep_data(sleep_data: dict) -> pd.DataFrame:

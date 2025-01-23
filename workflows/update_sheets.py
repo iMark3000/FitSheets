@@ -44,10 +44,9 @@ def update_google_sheet(data: pd.DataFrame, spreadsheet: pygsheets.Spreadsheet, 
     logger.info(f"Updating {config['sheet_name']} sheet")
     data = data.rename(config["field_mappings"], axis=1)
     data = data[config["field_filter_and_order"]]
-    data.to_csv(f"{config['sheet_name']}.csv", index=False)
 
     worksheet = spreadsheet.worksheet_by_title(config["sheet_name"])
-    sheet_df = worksheet.get_as_df(start="A2", include_tailing_empty=False)
+    sheet_df = worksheet.get_as_df(start=config["data_start_cell"], include_tailing_empty=False)
 
     sheet_df = _update_existing_records(sheet_df, data, config["id_field"])
     new_records = _get_new_records(sheet_df, data, config["id_field"])
@@ -55,7 +54,7 @@ def update_google_sheet(data: pd.DataFrame, spreadsheet: pygsheets.Spreadsheet, 
         merged_df = pd.concat([sheet_df, new_records])
     else:
         merged_df = new_records
-    worksheet.set_dataframe(merged_df, "A2", copy_head=True)
+    worksheet.set_dataframe(merged_df, config["data_start_cell"], copy_head=True)
 
     timestamp_cell = config.get("timestamp_cell")
     if timestamp_cell is not None:
