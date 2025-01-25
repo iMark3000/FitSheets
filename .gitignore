@@ -4,3 +4,4 @@ fitsheet.txt
 .env
 .idea/
 *.log
+.DS_Store

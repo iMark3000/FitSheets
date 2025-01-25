@@ -84,7 +84,10 @@ def main():
 
     if args.weight:
         df = fitbit_data.fetch_weight_logs(fb, days=days)
-        update_google_sheet(df, spreadsheet, "WEIGHT")
+        if len(df) > 0:
+            update_google_sheet(df, spreadsheet, "WEIGHT")
+        else:
+            logger.info("No data to update for weight")
 
     if args.refresh_token:
         logger.info("Refreshing tokens")
