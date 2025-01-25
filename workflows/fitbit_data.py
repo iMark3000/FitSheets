@@ -54,15 +54,18 @@ def fetch_sleep_logs(fb: fitbit.Fitbit, days: int) -> pd.DataFrame:
         df = _parse_sleep_data(sleep_data)
         sleep_dataframes.append(df)
     df = pd.concat(sleep_dataframes)
-    df = df[df["isMainSleep"] == "TRUE"]
     return df
 
 
 def _parse_sleep_data(sleep_data: dict) -> pd.DataFrame:
     data = []
     slp = sleep_data["sleep"]
+    summary = sleep_data["summary"]
+    stages = summary.pop("stages")
+    summary = summary | stages
     for record in slp:
         record.pop("minuteData")
+        record = record | summary
         data.append(record)
     return pd.DataFrame(data)
 

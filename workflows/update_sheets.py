@@ -50,11 +50,22 @@ def update_google_sheet(data: pd.DataFrame, spreadsheet: pygsheets.Spreadsheet, 
 
     sheet_df = _update_existing_records(sheet_df, data, config["id_field"])
     new_records = _get_new_records(sheet_df, data, config["id_field"])
-    if len(sheet_df) > 0:
+
+    merged_df = None
+    if len(sheet_df) > 0 and len(new_records) > 0:
+        logger.info("Updating existing records and adding new records")
         merged_df = pd.concat([sheet_df, new_records])
-    else:
+    elif len(sheet_df) > 0 >= len(new_records):
+        logger.info("Updating existing records; no new records to add")
+        merged_df = sheet_df
+    elif len(new_records) > 0 >= len(sheet_df):
+        logger.info("No existing records - adding new records to sheet")
         merged_df = new_records
-    worksheet.set_dataframe(merged_df, config["data_start_cell"], copy_head=True)
+
+    if merged_df is None:
+        logger.info("No data to add or update to sheet")
+    else:
+        worksheet.set_dataframe(merged_df, config["data_start_cell"], copy_head=True)
 
     timestamp_cell = config.get("timestamp_cell")
     if timestamp_cell is not None:
