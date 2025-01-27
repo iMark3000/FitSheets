@@ -70,7 +70,9 @@ def main():
     spreadsheet = connect_to_gsheet()
 
     if args.activity:
-        df = fitbit_data.fetch_activity(fb, days=days)
+        summary_df, log_df = fitbit_data.fetch_activity(fb, days=days)
+        update_google_sheet(summary_df, spreadsheet, "ACTIVITY_SUMMARY")
+        update_google_sheet(log_df, spreadsheet, "ACTIVITY_LOGS")
 
     if args.nutrition:
         df = fitbit_data.fetch_nutrition(fb, days=days)
