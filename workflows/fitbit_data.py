@@ -93,7 +93,16 @@ def _parse_sleep_data(sleep_data: dict) -> pd.DataFrame:
     data = []
     slp = sleep_data["sleep"]
     summary = sleep_data["summary"]
-    stages = summary.pop("stages")
+    stages = summary.get("stages")
+    if stages is not None:
+        stages = summary.pop("stages")
+    else:
+        stages = {
+            "deep": "0",
+            "light": "0",
+            "rem": "0",
+            "wake": "0"
+        }
     summary = summary | stages
     for record in slp:
         record.pop("minuteData")
